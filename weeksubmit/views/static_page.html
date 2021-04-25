@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>봄 코디 추천</title>
+    <style>
+        button {
+            background-color: darkorange;
+        }
+
+        /*header설정 바꾸지 말기*/
+        header {
+            position: fixed;
+            background-color: palevioletred;
+            width: 100px;
+            left: 500px;
+            text-align: center;
+        }
+
+        fieldset {
+            background-color: rgba(230, 144, 204, 0.8);
+        }
+
+        /*nav설정 바꾸지 말기*/
+        nav {
+            position: static;
+        }
+
+        /*article 위치 설정 바꾸지 말기*/
+        article {
+            position: relative;
+            left: 10px;
+            top: 10px;
+        }
+        #out{
+            font-size:0.5em;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <header>
+        봄 코디 추천
+    </header>
+    <nav>메뉴설명</nav>
+    <article>
+        <section>
+            <fieldset>
+                <legend></legend>
+                
+                <label for="temp">기온</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label for="humi">습도</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label for="cloth">코디 룩 추천</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <!--<button type="button" id="cloth" name="clothes" onclick="f_link();">이동</button><br/>-->
+                <button type="button" id="cloth" name="cloths" onclick="forBtn();">이동</button>
+                <p>Select for making btns array:</p>
+                <input type="file" id="txt">
+                <p>Select local CSV file:</p>
+                <input type="file" id="csv">
+                <output id="out">
+                    file contents will appear here
+                </output>
+                <!--html에서 text파일 읽기:https://hianna.tistory.com/345-->
+                <div ></div>
+                <!--<input type="text" value="crayon" name="color">-->
+                <input type="file" value="txt file" name="second">
+                <output class="preview">
+                    second file contents will appear here
+                </output>
+            </fieldset>
+        </section>
+    </article>
+    
+    
+    <script>
+        var table = "";
+        var fileInput = document.getElementById("csv");
+        readFile = function () {
+            var reader = new FileReader();
+            reader.onload = function () {
+                //document.getElementById('out').innerHTML = reader.result;
+                data = reader.result;
+                //make table
+                var rows = data.split('\n');
+                for (var rowIndex in rows) {
+                    var row = rows[rowIndex].split(',');
+                    var parse = Number(rowIndex);
+                    var htmladd_src=`<button type="button" id="cloth" name="clothes" onclick="f_link();">이동</button><br/>`;
+                    
+                    if(rowIndex==="0"){
+                        table = '<table>';
+                        table += '<thead>';
+                        table += '<tr>';
+                        for (var columnIndex in row) {
+                            table += '<th style="border: 3px solid rgba(0,0,0,0.2)">';
+                            table += rows[columnIndex];
+                            table += '</th>';
+                        }
+                        table += '</tr></thead>';
+                        table+= '<tbody>';
+                    }
+                    else{
+                        
+                        for(var columnIndex in row){
+                            if(columnIndex==="0"){
+                                table+= '<td style="border: 3px solid rgba(0,0,0,0.2)">';
+                                table+= row[columnIndex];
+                                table+= '</td>';
+                            }else if(columnIndex==="1"){
+                                table+= '<td style="border: 3px solid rgba(0,0,0,0.2)">';
+                                table+= row[columnIndex];
+                                table+= '</td>';
+                            }else if(columnIndex==="2"){
+                                table+= '<td style="border: 3px solid rgba(0,0,0,0.2)">';
+                                table+= htmladd;
+                                table+= '</td>';
+                            }else{
+                                
+                                table+= '<td style="border: 3px solid rgba(0,0,0,0.2)">';
+                                table+= htmladd_src;
+                                table+= '</td>';
+                            }
+                        }
+                        table+= '</tr>';
+                        
+                    }
+                    
+                }
+                table += '</tbody></table>';
+                $('body').append(table);
+            };
+            reader.readAsBinaryString(fileInput.files[0]);
+        };
+        fileInput.addEventListener('change', readFile);
+        document.write(table);
+    </script>
+    <script>
+        
+        function readTxtFunc(){
+            var input__ = document.querySelector('input[name="second"]');
+            var ouput = document.querySelector('.preview');
+            var reader__ = new FileReader();
+            reader__.onload = function(){
+                data = reader__.result;
+                var srcList = data.split('\n');
+                for(var i=0;i<srcList.length;i++){
+                    var parse = i+1;
+                    base = document.querySelector(`table tbody tr:nth-child(${parse})`);
+                    elem = base.querySelector('td:nth-child(4)');
+                    elem.innerHTML = srcList[i];
+                }
+                
+            };
+            reader__.readAsBinaryString(input.files[0]);
+            input__.addEventListener('change', readTxtFunc);
+        }
+    </script>
+
+    <script>
+        var temp_btns=[];
+        //.png파일에 해당하는 src를 link로 연결해줄거야(이동버튼에서)
+        //그걸위해서 htmladd_src라는 것을 button의 onclick에서 f_link()함수
+        //에서 getClickHandler함수에 등록하는 과정을 거칠거야
+        //그것을 위한 script야.
+        //Array로 선언해도 같은 결과인뎅,,
+        btns = document.querySelectorAll('#cloth')
+        var input = document.getElementById("txt");
+        readFile_ = function () {
+            var reader_ = new FileReader();
+            reader_.onload = function () {
+                //document.getElementById('out').innerHTML = reader.result;
+                data = reader_.result;
+                var srcList = data.split('\n');
+                htmladding_ = "";
+                for(var i in srcList){
+                    htmladding_ += `
+                        <div>${srcList[i]}</div>;
+                    `;
+                    temp_btns.push(srcList[i]);
+                }
+                console.log("htmladding_"+htmladding_);
+                //> td
+                $('tbody > tr:nth-child(1)').append(htmladding_);
+            };
+            reader_.readAsBinaryString(input.files[0]);
+        };
+        input.addEventListener('change', readFile_);
+        /*srcList의 모든 원소가 htmladding_에 담겼기 때문에 이 상태에서
+        * onclick에서 연결해줄 url을 정한다
+        */
+        function forBtn(){
+            console.log(temp_btns);
+            btns = document.querySelectorAll('#cloth')
+            for(var i=0;i<btns.length;i++){
+                console.log(btns.length);
+                console.log("adding:"+btns[i]);
+                btns[i].addEventListener("click",getClickHandler(i));
+            }
+        }
+        console.log(temp_btns);
+        var srcpath = []
+        for(var i=0;i<temp_btns.length;i++){
+            srcpath[i] = temp_btns[i];
+        }
+        function getClickHandler(i){
+            return function(){
+                //var elem = document.querySelector('#cloth');
+                imgpath = '../public/images/GogosingImg_detail/gogosing'+i+".png";
+                
+                //console.log(url['onclick']);
+                //$(location).attr('href',url);
+                //console.log(url['onclick'].querySelector('location'));
+                //elem.setAttribute("onclick", `location.href=${url}`);
+                /*button createElement 속성지정:https://renenyffenegger.ch/notes/development/web/DOM/examples/Events/onclick*/
+                /*이미지 createElement 속성지정: https://m.blog.naver.com/PostView.nhn?blogId=udstar&logNo=150134070366&proxyReferer=https:%2F%2Fwww.google.com%2F*/
+                let imgElem = document.createElement("img");
+                imgElem.src=imgpath;
+                imgElem.width=500;
+                imgElem.height=1350;
+                let element = document.createElement("button");
+                element.textContent='이동';
+                /*onclick button createelement setAttribute:https://stackoverflow.com/questions/9069470/insert-array-into-location-href*/
+                //var btn_arr =document.querySelectorAll('button')
+                //    btn_ele = btn_arr[i].setAttribute("onclick", "location.href ='"+ srcpath[i] +"'; return false");
+                element.onclick=function(){
+                    //location.href= 'https://www.ggsing.com/product/list.html?cate_no=2112';
+                    //document.querySelectorAll('button')[i].setAttribute("onclick", "location.href='https://www.ggsing.com/product/list.html?cate_no=2112'");
+                    //document.querySelectorAll('button')[i].setAttribute("onclick", "self.location.href ='"+ srcpath[i] +"'; return false");
+                    self.location.href = temp_btns[i];
+                
+                }
+                var a = document.createElement('a');
+                a.href = temp_btns[i];
+
+                /* var content = document.createTextNode("hello");
+                element.appendChild(content); */
+                var parse = i+1;
+                var current = document.querySelector(`tbody > tr:nth-child(${parse})`);
+                document.body.appendChild(imgElem, current);
+                document.body.appendChild(element, current);
+                document.body.appendChild(a, current);
+            }
+        }
+    </script>
+
+</body>
+
+</html>

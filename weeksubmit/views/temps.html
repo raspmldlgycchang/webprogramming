@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form onsubmit="return checkForm()">
+        Password: <input type="text" name="pwd">
+        <input type="submit" value="Submit">
+    </form>
+    <script>
+        debugger;
+        function checkForm(){
+            var form = document.forms[0];/*첫번째 form을 선택*/
+            var selectElement = form.querySelector('');/*여기서 다시 querySel사용*/
+            var selectedValue = selectElement.value;
+
+            alert(selectedValue);
+        }
+        /*name="pwd"인 것을 빼내고 싶다*/
+    </script>
+</body>
+</html>

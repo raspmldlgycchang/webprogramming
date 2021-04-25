@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>봄 코디 추천</title>
+    <style>
+        button{
+            background-image:url('./images/<image명>');
+        }
+        /*header설정 바꾸지 말기*/
+        header{
+            position:fixed;
+            background-color:palevioletred;
+            width:100px;
+            left:500px;
+            text-align:center;
+        }
+        /*nav설정 바꾸지 말기*/
+        nav{
+            position:static;
+        }
+        /*article 위치 설정 바꾸지 말기*/
+        article{
+            position:relative;
+            left:10px;
+            top:10px;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript" src="./javascripts/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="./javascripts/data.js"></script> 
+    <script type="text/javascript" src="./javascripts/temperature.js"></script>
+    <script type="text/javascript" src="./javascripts.humidity.js"></script>
+    <header>
+        봄 코디 추천
+    </header>
+    <nav>메뉴설명</nav>
+    <article>
+        <section>
+            <form action="/" method="post">
+                <fieldset>
+                    <legend></legend>
+                    <label for="temp">기온:</label>
+                    <input type="text" id="temp" name="temperature">
+                    <label for="humi">습도:</label>
+                    <input type="text" id="humi" name="humidity">
+                    <label for="cloth">코디 룩 추천</label>
+                    <button type="button" id="cloth" name="clothes" onclick="f_link();">이동</button>
+                    <!--<a target="_blank" href=
+                    -->
+                    <input type="submit" name="몇번버튼클릭인지">
+                </fieldset>
+            </form>
+        </section>
+    </article>
+    <script>
+        list_button=[]
+        for(var i=0;i<버튼개수;i++){
+            window.addEventListener()
+        }
+        function addImage(){
+            /*이미지 src를 넣어서 img 태그 자체를 넣어도 그 이미지 삽입됨*/
+            for(var i in data){
+                var tmp = data[i].src;
+                var htmladd= `
+                    <img src="./images/${tmp}" alt="이미지 안뜸" width="100" height="100">
+                `;
+            }
+            
+        }
+        /*미리 list_button배열을 만들어놓고 이 배열의 각 요소에 
+        getClickHandler를 addEventListener이용해서 등록하자*/
+        function getClickHandler(i){/*data중 몇번째를 클릭했는지*/
+           return function(){
+           } 
+        }
+        function f_link(){
+            //var addr = "#{addr}";
+            //location.href= addr;
+            document.querySelector('button').setAttribute("onclick", "location.href='https://www.ggsing.com/product/list.html?cate_no=2112'");
+        }
+        f_link();
+    </script>
+</body>
+</html>
